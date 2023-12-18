@@ -8,6 +8,10 @@ export const register = async (req,res) => {
     const {email, password, username} = req.body
    
     try {
+        const userFound = await User.findOne({email})
+        if (userFound) return res.status(400).json(['El usuario ya esta en uso'])
+
+
        const passwordHash = await bcrypt.hash(password, 10)
 
 
